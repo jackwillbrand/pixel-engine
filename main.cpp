@@ -1,25 +1,21 @@
-#include <SDL2/SDL.h>
-#include <iostream>
+#include <SFML/Graphics.hpp>
 
-#include "src/PixelGame.hpp"
+int main() {
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test Program");
 
-int main(int argc, char* argv[])
-{
-    PixelGame game;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
 
-    if (!game.init("Pixel Game", 800, 600))
-    {
-        return -1;
+        window.clear(sf::Color::Black);
+        sf::CircleShape shape(50);
+        shape.setFillColor(sf::Color::Green);
+        shape.setPosition(375, 275);
+        window.draw(shape);
+        window.display();
     }
-
-    while (game.isRunning())
-    {
-        game.handleEvents();
-        game.update();
-        game.render();
-    }
-
-    game.clean();
-
     return 0;
 }
